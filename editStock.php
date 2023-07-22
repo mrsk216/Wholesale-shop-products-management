@@ -6,8 +6,9 @@
     $product_name = $_GET['product_name'];
     $product_quantity = $_GET['product_quantity'];
     $product_rate = $_GET['product_rate'];
+    $date = date('Y-m-d H:i:s');
     
-    $sql = "UPDATE `stock` SET `brand_name`='$brand_name',`product_name`='$product_name',`product_quantity`='$product_quantity',`product_rate`='$product_rate' where `id` = '$id'";
+    $sql = "UPDATE `stock` SET `brand_name`='$brand_name',`product_name`='$product_name',`product_quantity`='$product_quantity',`product_rate`='$product_rate',`created_date`='$date' where `id` = '$id'";
 
     
     

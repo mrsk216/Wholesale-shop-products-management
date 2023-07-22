@@ -52,6 +52,7 @@
                                     $num = '1';
                                     $sum = 0;
                                     while($row = $result->fetch_assoc()) {
+                                        $date = date_create($row["created_date"]);
                                         echo '<tr class="text-center">';
                                         echo '<td>'.$num++.'</td=>';
                                         echo '<td id="brandName">'.$row["brand_name"].'</td>';
@@ -59,7 +60,7 @@
                                         echo '<td class="fw-bold">'.$row["product_quantity"].'</td>';
                                         echo '<td>'.$row["product_rate"].'</td>';
                                         echo '<td class="fw-bold">'.$row["total_price"].'</td>';
-                                        echo '<td>'.$row["created_date"].'</td>';
+                                        echo '<td>'.date_format($date,"d/m/Y").'</td>';
                                         echo '<td><div class="d-flex justify-content-center align-items-center gap-2"><a href="stock.php?id='.$row["id"].'&brand='.$row["brand_name"].'&name='.$row["product_name"].'&quantity='.$row["product_quantity"].'&rate='.$row["product_rate"].'&total_price='.$row["total_price"].'"><i class="fa-solid fa-pen-to-square fs-4"></i></a>|<a href="" class="addquantity" id="'.$row["id"].'" data-bs-toggle="modal" data-bs-target="#addquantity"><i class="fa-solid fa-circle-plus fs-4"></i></a></div></td>';
                                         echo '</tr>';
                                         $sum += $row["total_price"];
@@ -203,12 +204,13 @@
         @include("config.php");
         $id = $_GET['product_id'];
         $brand = $_GET['brand'];
+        $date = date('Y-m-d H:i:s');
         $UpdatableProductData = "SELECT * FROM `stock` where `id` = '$id'";
         $mainData = $conn->query($UpdatableProductData);
         $mainDataArray = $mainData->fetch_assoc();
         $quantity = $mainDataArray['product_quantity'] + $_GET['product_ex_quantity'];        
         $total_price = $quantity * $mainDataArray['product_rate'];
-        $sql = "UPDATE `stock` SET `product_quantity`='$quantity',`total_price`='$total_price' where `id` = '$id'";
+        $sql = "UPDATE `stock` SET `product_quantity`='$quantity',`total_price`='$total_price',`created_date`='$date' where `id` = '$id'";
         if ($conn->query($sql) === TRUE) {
             echo '<script type="text/javascript">window.location.href = "stock.php?brand='.$brand.'";</script>';
         }        

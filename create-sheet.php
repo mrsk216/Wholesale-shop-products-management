@@ -13,74 +13,81 @@
 
     $conn->close();
 ?>
-
-<section>
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-12">
-                <form action="create-sheet" method="GET" class="row justify-content-center">
-                    <div class="col-10 col-md-8 col-lg-6 col-xl-4">
-                        <h4 class="text-center mt-4">শীট তৈরি করুন</h4>
-                        <div class="form-group mb-3">
-                            <label for="brand_name" class="text-secondary">কোম্পানি</label>
-                            <input type="text" name="brand_name" class="form-control form-control-lg rounded-pill" value="<?php echo $_GET['brand']; ?>" readonly>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="area" class="text-secondary">এরিয়া</label>
-                            <select name="area" class="form-control form-control-lg rounded-pill" required>
-                                <option muted>সিলেক্ট করুন</option>
-                                <option value="হরিরামপুর">হরিরামপুর</option>
-                                <option value="ঝিটকা">ঝিটকা</option>
-                                <option value="বালিরটেক">বালিরটেক</option>
-                                <option value="বেরিবাধ">বেরিবাধ</option>
-                                <option value="বনপারিল">বনপারিল</option>
-                                <option value="হাটিপাড়া">হাটিপাড়া</option>
-                                <option value="অন্যান্য">অন্যান্য</option>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="deliveryman" class="text-secondary">ডেলিভারি ম্যান</label>
-                            <input type="text" name="deliveryman" class="form-control form-control-lg rounded-pill" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="product_name" class="text-secondary">পণ্যের নাম</label>
-                            <select name="product_name" id="product_name" class="form-control form-control-lg rounded-pill" required>
-                                <option muted>সিলেক্ট করুন</option>
-                                <?php
-                                    if ($result->num_rows > 0) {
-                                        while($row = $result->fetch_assoc()) {
-                                            echo '<option value="'.$row["product_name"].'">'.$row["product_name"].'</option>';
-                                        }
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="load" class="text-secondary">লোড</label>
-                            <input type="number" name="load" id="memoProductLoad" class="form-control form-control-lg rounded-pill" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="return" class="text-secondary">ফেরত</label>
-                            <input type="number" name="return" id="memoProductReturn" class="form-control form-control-lg rounded-pill" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="sale" class="text-secondary">বিক্রি</label>
-                            <input type="number" name="sale" id="memoProductSale" class="form-control form-control-lg rounded-pill" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="rate" class="text-secondary">দর</label>
-                            <div class="input-group mb-3">
-                                <input type="number" name="rate" placeholder="stock theke auto asbe" class="form-control form-control-lg rounded-pill rounded-end" aria-label="Brand Name" aria-describedby="brand_name" required>
-                                <span class="input-group-text rounded-pill rounded-start" id="brand_name">tk</span>
-                            </div>
-                        </div>
-                        <div class="form-group mb-3">
-                            <button type="submit" class="btn btn-info">Create</button>
-                        </div>
-                    </div>
-                </form>
-            </div>            
+<p class="d-none">company,area,delivery,product,load,ferot,bikri,dor</p>
+<section class="mt-4">
+  <div class="container">
+    <form class="card">
+      <div class="card-header">
+        <nav class="nav nav-pills nav-fill">
+          <a class="nav-link tab-pills" href="#">Step 1</a>
+          <a class="nav-link tab-pills" href="#">Step 2</a>
+          <a class="nav-link tab-pills" href="#">Step 3</a>
+          <a class="nav-link tab-pills" href="#">Finish</a>
+        </nav>
+      </div>
+      <div class="card-body">
+        <div class="tab d-none">
+          <div class="mb-3">
+            <label for="brand_name" class="form-label">কোম্পানি</label>
+            <input type="text" class="form-control" name="brand_name" id="brand_name">
+          </div>
+          <div class="mb-3">
+            <label for="area_name" class="form-label">এড়িয়া</label>
+            <input type="text" class="form-control" name="area_name" id="area_name">
+          </div>
+          <div class="mb-3">
+            <label for="deliveryman_name" class="form-label">ডেলিভারী ম্যানের নাম</label>
+            <input type="text" class="form-control" name="deliveryman_name" id="deliveryman_name">
+          </div>
         </div>
-    </div>
+
+        <div class="tab d-none">
+          <div class="mb-3">
+            <label for="product_name" class="form-label">প্রোডাক্টের নাম</label>
+            <select name="product_name" id="product_name">
+                <option muted>সিলেক্ট করুন</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="product_load" class="form-label">লোড</label>
+            <input type="number" class="form-control" name="product_load" id="product_load">
+          </div>
+        <div class="mb-3 col-md-6">
+            <label for="product_return" class="form-label">ফেরত</label>
+            <input type="number" class="form-control" name="product_return" id="product_return">
+        </div>
+        <div class="mb-3 col-md-6">
+            <label for="sale" class="form-label">বিক্রি</label>
+            <input type="number" class="form-control" name="sale" id="sale" placeholder="Please enter state">
+        </div>
+        <div class="mb-3 col-md-6">
+            <label for="product_rate" class="form-label">দর</label>
+            <input type="number" class="form-control" name="product_rate" id="product_rate">
+        </div>
+        </div>
+
+        <div class="tab d-none">
+          <div class="mb-3">
+            <label for="company_name" class="form-label">Company Name</label>
+            <input type="text" class="form-control" name="company_name" id="company_name" placeholder="Please enter company name">
+          </div>
+          <div class="mb-3">
+            <label for="company_address" class="form-label">Company Address</label>
+            <textarea class="form-control" name="company_address" id="company_address" placeholder="Please enter company address"></textarea>
+          </div>
+        </div>
+
+        <div class="tab d-none">
+          <p>All Set! Please submit to continue. Thank you</p>
+        </div>
+      </div>
+      <div class="card-footer text-end">
+        <div class="d-flex">
+          <button type="button" id="back_button" class="btn btn-link" onclick="back()">Back</button>
+          <button type="button" id="next_button" class="btn btn-primary ms-auto" onclick="next()">Next</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </section>
 <?php @include("layout/footer.php") ?>
