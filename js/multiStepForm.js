@@ -9,12 +9,10 @@ function loadFormData(n) {
   $(tabs[n]).removeClass("d-none");
   $("#back_button").attr("disabled", n == 0 ? true : false);
   n == tabs.length - 1
-    ? $("#next_button").text("Submit").removeAttr("onclick")
-    : $("#next_button")
-        .attr("type", "button")
-        .text("Next")
-        .attr("onclick", "next()");
+    ? $("#next_button").text("যুক্ত করুন").attr("onclick", "submit()")
+    : $("#next_button").attr("type", "button").text("সামনে যান").attr("onclick", "next()");
 }
+
 
 function next() {
   $(tabs[current]).addClass("d-none");
@@ -31,3 +29,11 @@ function back() {
   current--;
   loadFormData(current);
 }
+
+function submit(){
+  $("#next_button").attr("type", "submit");
+}
+
+
+
+

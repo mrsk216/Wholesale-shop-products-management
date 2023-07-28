@@ -13,81 +13,88 @@
 
     $conn->close();
 ?>
-<p class="d-none">company,area,delivery,product,load,ferot,bikri,dor</p>
-<section class="mt-4">
+
+
+<section class="my-4">
   <div class="container">
-    <form class="card">
-      <div class="card-header">
-        <nav class="nav nav-pills nav-fill">
-          <a class="nav-link tab-pills" href="#">Step 1</a>
-          <a class="nav-link tab-pills" href="#">Step 2</a>
-          <a class="nav-link tab-pills" href="#">Step 3</a>
-          <a class="nav-link tab-pills" href="#">Finish</a>
-        </nav>
-      </div>
-      <div class="card-body">
+    <form action="createMemo.php" method="GET" class="row flex-column justify-content-center align-items-center">
+      <div class="col-12 col-md-6 col-lg-4 mt-4">
         <div class="tab d-none">
           <div class="mb-3">
             <label for="brand_name" class="form-label">কোম্পানি</label>
-            <input type="text" class="form-control" name="brand_name" id="brand_name">
+            <input type="text" class="form-control" name="brand_name" id="brand_name" value="<?php echo $_GET['brand']; ?>" readonly>
           </div>
           <div class="mb-3">
             <label for="area_name" class="form-label">এড়িয়া</label>
-            <input type="text" class="form-control" name="area_name" id="area_name">
-          </div>
-          <div class="mb-3">
-            <label for="deliveryman_name" class="form-label">ডেলিভারী ম্যানের নাম</label>
-            <input type="text" class="form-control" name="deliveryman_name" id="deliveryman_name">
-          </div>
-        </div>
-
-        <div class="tab d-none">
-          <div class="mb-3">
-            <label for="product_name" class="form-label">প্রোডাক্টের নাম</label>
-            <select name="product_name" id="product_name">
-                <option muted>সিলেক্ট করুন</option>
+            <select class="form-control" name="area_name" id="area_name" require>
+              <option muted>সিলেক্ট করুন</option>              
+              <option value="হরিরামপুর">হরিরামপুর</option>
+              <option value="ঝিটকা">ঝিটকা</option>
+              <option value="বালিরটেক">বালিরটেক</option>
+              <option value="বেরিবাধ">বেরিবাধ</option>
+              <option value="বনপারিল">বনপারিল</option>
+              <option value="হাটিপাড়া">হাটিপাড়া</option>
+              <option value="অন্যান্য">অন্যান্য</option>
             </select>
           </div>
           <div class="mb-3">
-            <label for="product_load" class="form-label">লোড</label>
-            <input type="number" class="form-control" name="product_load" id="product_load">
-          </div>
-        <div class="mb-3 col-md-6">
-            <label for="product_return" class="form-label">ফেরত</label>
-            <input type="number" class="form-control" name="product_return" id="product_return">
-        </div>
-        <div class="mb-3 col-md-6">
-            <label for="sale" class="form-label">বিক্রি</label>
-            <input type="number" class="form-control" name="sale" id="sale" placeholder="Please enter state">
-        </div>
-        <div class="mb-3 col-md-6">
-            <label for="product_rate" class="form-label">দর</label>
-            <input type="number" class="form-control" name="product_rate" id="product_rate">
-        </div>
-        </div>
-
-        <div class="tab d-none">
-          <div class="mb-3">
-            <label for="company_name" class="form-label">Company Name</label>
-            <input type="text" class="form-control" name="company_name" id="company_name" placeholder="Please enter company name">
-          </div>
-          <div class="mb-3">
-            <label for="company_address" class="form-label">Company Address</label>
-            <textarea class="form-control" name="company_address" id="company_address" placeholder="Please enter company address"></textarea>
+            <label for="deliveryman_name" class="form-label">ডেলিভারী ম্যানের নাম</label>
+            <input type="text" class="form-control" name="deliveryman_name" id="deliveryman_name" require>
           </div>
         </div>
 
         <div class="tab d-none">
-          <p>All Set! Please submit to continue. Thank you</p>
+          <div id="moreForm">
+            <div id="card">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="mb-3">
+                    <label for="product_name" class="form-label">প্রোডাক্টের নাম</label>
+                    <select class="form-control" name="product_name[]" require>
+                      <option muted>সিলেক্ট করুন</option>
+                      <?php
+                        if ($result->num_rows > 0) { 
+                          while($row = $result->fetch_assoc()) {
+                            echo '<option value="'.$row['product_name'].'">'.$row['product_name'].'</option>';
+                          }
+                        }
+                      ?>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="product_load" class="form-label">লোড</label>
+                    <input type="number" class="form-control" name="product_load[]" require>
+                  </div>
+                  <div class="mb-3">
+                      <label for="product_return" class="form-label">ফেরত</label>
+                      <input type="number" class="form-control" name="product_return[]">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <button type="button" onclick="addMore()" class="w-100 btn btn-info">আরো প্রোডাক্ট যুক্ত করুন</button>
+          </div>      
         </div>
       </div>
-      <div class="card-footer text-end">
+      <div class="col-12 col-md-6 col-lg-4 text-end">
         <div class="d-flex">
-          <button type="button" id="back_button" class="btn btn-link" onclick="back()">Back</button>
-          <button type="button" id="next_button" class="btn btn-primary ms-auto" onclick="next()">Next</button>
+          <button type="button" id="back_button" class="btn btn-info" onclick="back()">আগে যান</button>
+          <button type="button" id="next_button" class="btn btn-info ms-auto" onclick="next()">সামনে যান</button>
         </div>
       </div>
     </form>
   </div>
 </section>
+
+<script>
+  //when the Add Field button is clicked
+  function addMore() {    
+    $formCard = $("#card").html();
+    $("#moreForm").append(    
+      $formCard
+    );  
+  }
+</script>
 <?php @include("layout/footer.php") ?>
