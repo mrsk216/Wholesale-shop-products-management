@@ -25,7 +25,7 @@
             <input type="text" class="form-control" name="brand_name" id="brand_name" value="<?php echo $_GET['brand']; ?>" readonly>
           </div>
           <div class="mb-3">
-            <label for="area_name" class="form-label">এড়িয়া</label>
+            <label for="area_name" class="form-label">এরিয়া</label>
             <select class="form-control" name="area_name" id="area_name" require>
               <option muted>সিলেক্ট করুন</option>              
               <option value="হরিরামপুর">হরিরামপুর</option>
@@ -68,6 +68,10 @@
                   <div class="mb-3">
                       <label for="product_return" class="form-label">ফেরত</label>
                       <input type="number" class="form-control" name="product_return[]">
+                  </div>
+                  <div class="mb-3">
+                      <label for="product_damage" class="form-label">ড্যামেজ</label>
+                      <input type="number" class="form-control" name="product_damage[]">
                   </div>
                 </div>
               </div>
