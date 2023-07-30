@@ -116,7 +116,7 @@
                     <div class="form-group mb-3">
                         <label for="product_rate" class="text-secondary">দর</label>
                         <div class="input-group mb-3">
-                            <input type="number" name="product_rate" class="form-control form-control-lg rounded-pill rounded-end" aria-label="Brand Name" aria-describedby="taka" required>
+                            <input type="text" name="product_rate" class="form-control form-control-lg rounded-pill rounded-end" aria-label="Brand Name" aria-describedby="taka" required>
                             <span class="input-group-text rounded-pill rounded-start" id="taka">tk</span>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
                     <div class="form-group mb-3">
                         <label for="product_rate" class="text-secondary">দর</label>
                         <div class="input-group mb-3">
-                            <input type="number" name="product_rate" class="form-control form-control-lg rounded-pill rounded-end" value="<?php echo $_GET['rate']; ?>" aria-label="Brand Name" aria-describedby="tk" required>
+                            <input type="text" name="product_rate" class="form-control form-control-lg rounded-pill rounded-end" value="<?php echo $_GET['rate']; ?>" aria-label="Brand Name" aria-describedby="tk" required>
                             <span class="input-group-text rounded-pill rounded-start" id="tk">tk</span>
                         </div>
                     </div>
