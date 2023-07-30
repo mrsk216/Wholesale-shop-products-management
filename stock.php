@@ -20,9 +20,9 @@
                 <div id="printBtn-wapper" class="d-flex justify-content-between gap-2">
                     <!-- Button trigger modal -->
                     <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addStock">
-                    Add Stock
+                    স্টক যুক্ত করুন
                     </button>
-                    <button class="btn btn-info d-flex align-items-center" id="printBtn"><i class="fa-solid fa-print me-2"></i>Print</button>
+                    <button class="btn btn-info d-flex align-items-center" onclick="printDiv('table-wapper')"><i class="fa-solid fa-print me-2"></i>প্রিন্ট</button>
                 </div>
             </div>
             <div id="table-wapper" class="col-12 mt-4">

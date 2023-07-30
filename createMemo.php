@@ -23,10 +23,10 @@
 
         if ($conn->query($sql) === TRUE) {
             $msg = "পণ্য যুক্ত হয়েছে";
-            header("Localtion: memo.php");
+            header('Location: memo.php?brand='.$brandName.'&created_at='.date("Y-m-d"));
         } else {
             $msg = mysqli_error($conn);
-            header("Localtion: create-sheet.php");
+            header('Location: create-sheet.php?brand='.$brandName);
         }
         echo $msg;
     }

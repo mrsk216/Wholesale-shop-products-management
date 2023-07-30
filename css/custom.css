@@ -1,7 +1,9 @@
 a{
     text-decoration: none;
 }
-
+ul{
+    list-style: none;
+}
 .brands{
     height: 100vh;
     position: absolute;
