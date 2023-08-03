@@ -1,19 +1,17 @@
 <?php @include("layout/header.php") ?>
 <?php
     @include("config.php");
+    $brandName = $_GET['brand'];
     $createdDate = $_GET['created_at'];
-    if($_GET['brand'] == "কোকোলা ফুড প্রোডাক্টস্ লিঃ"){
-        $memo_data = "SELECT * FROM `memo` where `brand_name` = 'কোকোলা ফুড প্রোডাক্টস্ লিঃ' AND `created_at` = '$createdDate'";
-    }else if($_GET['brand'] == "CBL মানচি"){
-        $memo_data = "SELECT * FROM `memo` where `brand_name` = 'CBL মানচি' AND `created_at` = '$createdDate'";
-    }else if($_GET['brand'] == "একমি কনজুমার লিঃ"){
-        $memo_data = "SELECT * FROM `memo` where `brand_name` = 'একমি কনজুমার লিঃ' AND `created_at` = '$createdDate'";
-    }
+    $memo_data = "SELECT * FROM `memo` where `brand_name` = '$brandName' AND `created_at` = '$createdDate'";
     $result = $conn->query($memo_data);
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $data[] = $row;
         }
+    }
+    if ($result->num_rows <= 0){
+        header("Location: /zihan");
     }
     $conn->close();
 ?>
@@ -59,6 +57,7 @@
                                         <th>ক্রঃমিঃ</th>
                                         <th>পণ্যের নাম</th>
                                         <th>লোড</th>
+                                        <th>ফ্রী</th>
                                         <th>ফেরত</th>
                                         <th>বিক্রি</th>
                                         <th>দর</th>
@@ -78,6 +77,7 @@
                                             echo '<td width="30px">'.$num++.'</td=>';
                                             echo '<td>'.$data[$i]["product_name"].'</td>';
                                             echo '<td>'.$data[$i]["product_load"].'</td>';
+                                            echo '<td>'.$data[$i]["product_free"].'</td>';
                                             echo '<td>'.$data[$i]["product_return"].'</td>';
                                             echo '<td class="fw-bold">'.$data[$i]["product_sale"].'</td>';
                                             echo '<td class="fw-bold">'.$data[$i]["product_rate"].'</td>';
@@ -93,11 +93,12 @@
                                                 <td colspan="8"></td>
                                                 <td>মোটঃ</td>
                                                 <td class="fw-bold">'.$sum.'</td>
+                                                <td></td>
                                             </tr>
                                         ';
                                     }else{
                                         echo '<tr class="text-center">'; 
-                                        echo '<td colspan="10">কোনো প্রডাক্ট নেই!</td>';
+                                        echo '<td colspan="11">কোনো প্রডাক্ট নেই!</td>';
                                         echo '</tr>';
                                     }
                                 ?>                            

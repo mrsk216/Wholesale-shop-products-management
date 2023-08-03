@@ -5,10 +5,12 @@
     $brand_name = $_GET['brand_name'];
     $product_name = $_GET['product_name'];
     $product_quantity = $_GET['product_quantity'];
+    $product_free = $_GET['product_free'];
     $product_rate = $_GET['product_rate'];
+    $product_price = $_GET['product_quantity'] * $_GET['product_rate'];
     $date = date('Y-m-d H:i:s');
     
-    $sql = "UPDATE `stock` SET `brand_name`='$brand_name',`product_name`='$product_name',`product_quantity`='$product_quantity',`product_rate`='$product_rate',`created_date`='$date' where `id` = '$id'";
+    $sql = "UPDATE `stock` SET `brand_name`='$brand_name',`product_name`='$product_name',`product_quantity`='$product_quantity',`product_free`='$product_free',`product_rate`='$product_rate',`total_price`='$product_price',`created_date`='$date' where `id` = '$id'";
 
     
     

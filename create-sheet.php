@@ -2,14 +2,14 @@
 <?php
     @include("config.php");
 
-    if($_GET['brand'] == "কোকোলা ফুড প্রোডাক্টস্ লিঃ"){
-        $stock_data = "SELECT * FROM `stock` where `brand_name` = 'কোকোলা ফুড প্রোডাক্টস্ লিঃ'";
-    }else if($_GET['brand'] == "CBL মানচি"){
-        $stock_data = "SELECT * FROM `stock` where `brand_name` = 'CBL মানচি'";
-    }else if($_GET['brand'] == "একমি কনজুমার লিঃ"){
-        $stock_data = "SELECT * FROM `stock` where `brand_name` = 'একমি কনজুমার লিঃ'";
+    $brandName = $_GET['brand'];
+    if(isset($_GET['brand'])){
+        $stock_data = "SELECT * FROM `stock` where `brand_name` = '$brandName'";
     }
     $result = $conn->query($stock_data);
+    if ($result->num_rows <= 0){
+      header("Location: /zihan");
+    }
 
     $conn->close();
 ?>
@@ -26,8 +26,8 @@
           </div>
           <div class="mb-3">
             <label for="area_name" class="form-label">এরিয়া</label>
-            <select class="form-control" name="area_name" id="area_name" require>
-              <option muted>সিলেক্ট করুন</option>              
+            <select class="form-control" name="area_name" id="area_name" required> 
+              <option value="">সিলেক্ট করুন</option>            
               <option value="হরিরামপুর">হরিরামপুর</option>
               <option value="ঝিটকা">ঝিটকা</option>
               <option value="বালিরটেক">বালিরটেক</option>
@@ -39,7 +39,7 @@
           </div>
           <div class="mb-3">
             <label for="deliveryman_name" class="form-label">ডেলিভারী ম্যানের নাম</label>
-            <input type="text" class="form-control" name="deliveryman_name" id="deliveryman_name" require>
+            <input type="text" class="form-control" name="deliveryman_name" id="deliveryman_name" required>
           </div>
         </div>
 
@@ -50,12 +50,12 @@
                 <div class="card-body">
                   <div class="mb-3">
                     <label for="product_name" class="form-label">প্রোডাক্টের নাম</label>
-                    <select class="form-control" name="product_name[]" require>
+                    <select class="form-control pro-name" name="product_name[]" required>
                       <option muted>সিলেক্ট করুন</option>
                       <?php
                         if ($result->num_rows > 0) { 
                           while($row = $result->fetch_assoc()) {
-                            echo '<option value="'.$row['product_name'].'">'.$row['product_name'].'</option>';
+                            echo '<option value="'.$row['product_name'].'" class="pro-name-val">'.$row['product_name'].'</option>';
                           }
                         }
                       ?>
@@ -63,7 +63,11 @@
                   </div>
                   <div class="mb-3">
                     <label for="product_load" class="form-label">লোড</label>
-                    <input type="number" class="form-control" name="product_load[]" require>
+                    <input type="number" class="form-control" name="product_load[]">
+                  </div>
+                  <div class="mb-3">
+                    <label for="product_free" class="form-label">ফ্রী</label>
+                    <input type="number" class="form-control" name="product_free[]">
                   </div>
                   <div class="mb-3">
                       <label for="product_return" class="form-label">ফেরত</label>
@@ -99,6 +103,9 @@
     $("#moreForm").append(    
       $formCard
     );  
-  }
+  }  
+  // $('.pro-name').click(function (){
+  //     $(".pro-name option:selected").addClass('d-none');
+  // });
 </script>
 <?php @include("layout/footer.php") ?>

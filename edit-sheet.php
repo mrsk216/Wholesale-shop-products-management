@@ -48,6 +48,10 @@
                     <input type="number" class="form-control" name="product_load" value="<?php echo $data['product_load']; ?>" require>
                   </div>
                   <div class="mb-3">
+                    <label for="product_free" class="form-label">ফ্রী</label>
+                    <input type="number" class="form-control" name="product_free" value="<?php echo $data['product_free']; ?>" require>
+                  </div>
+                  <div class="mb-3">
                       <label for="product_return" class="form-label">ফেরত</label>
                       <input type="number" class="form-control" name="product_return" value="<?php echo $data['product_return']; ?>">
                   </div>

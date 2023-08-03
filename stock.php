@@ -1,16 +1,11 @@
 <?php @include("layout/header.php") ?>
 <?php
     @include("config.php");
-
-    if($_GET['brand'] == "কোকোলা ফুড প্রোডাক্টস্ লিঃ"){
-        $stock_data = "SELECT * FROM `stock` where `brand_name` = 'কোকোলা ফুড প্রোডাক্টস্ লিঃ'";
-    }else if($_GET['brand'] == "CBL মানচি"){
-        $stock_data = "SELECT * FROM `stock` where `brand_name` = 'CBL মানচি'";
-    }else if($_GET['brand'] == "একমি কনজুমার লিঃ"){
-        $stock_data = "SELECT * FROM `stock` where `brand_name` = 'একমি কনজুমার লিঃ'";
+    $brandName = $_GET['brand'];
+    if(isset($_GET['brand'])){
+        $stock_data = "SELECT * FROM `stock` where `brand_name` = '$brandName'";
     }
     $result = $conn->query($stock_data);
-
     $conn->close();
 ?>
 <section>
@@ -40,6 +35,7 @@
                                 <th>কোম্পানি নাম</th>
                                 <th>পণ্যের নাম</th>
                                 <th>পরিমাণ</th>
+                                <th>ফ্রী</th>
                                 <th>দর</th>
                                 <th>মূল্য</th>
                                 <th>তারিখ</th>
@@ -58,15 +54,17 @@
                                         echo '<td id="brandName">'.$row["brand_name"].'</td>';
                                         echo '<td>'.$row["product_name"].'</td>';
                                         echo '<td class="fw-bold">'.$row["product_quantity"].'</td>';
+                                        echo '<td class="fw-bold">'.$row["product_free"].'</td>';
                                         echo '<td>'.$row["product_rate"].'</td>';
                                         echo '<td class="fw-bold">'.$row["total_price"].'</td>';
                                         echo '<td>'.date_format($date,"d/m/Y").'</td>';
-                                        echo '<td><div class="d-flex justify-content-center align-items-center gap-2"><a href="stock.php?id='.$row["id"].'&brand='.$row["brand_name"].'&name='.$row["product_name"].'&quantity='.$row["product_quantity"].'&rate='.$row["product_rate"].'&total_price='.$row["total_price"].'"><i class="fa-solid fa-pen-to-square fs-4"></i></a>|<a href="" class="addquantity" id="'.$row["id"].'" data-bs-toggle="modal" data-bs-target="#addquantity"><i class="fa-solid fa-circle-plus fs-4"></i></a></div></td>';
+                                        echo '<td><div class="d-flex justify-content-center align-items-center gap-2"><a href="stock.php?id='.$row["id"].'&brand='.$row["brand_name"].'&name='.$row["product_name"].'&quantity='.$row["product_quantity"].'&free='.$row["product_free"].'&rate='.$row["product_rate"].'&total_price='.$row["total_price"].'"><i class="fa-solid fa-pen-to-square fs-4"></i></a>|<a href="" class="addquantity" id="'.$row["id"].'" data-bs-toggle="modal" data-bs-target="#addquantity"><i class="fa-solid fa-circle-plus fs-4"></i></a></div></td>';
                                         echo '</tr>';
                                         $sum += $row["total_price"];
                                     }
                                     echo '
                                         <tr class="text-center">
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -79,7 +77,7 @@
                                     ';
                                 }else{
                                     echo '<tr class="text-center">'; 
-                                    echo '<td colspan="8">কোনো প্রডাক্ট নেই!</td>';
+                                    echo '<td colspan="9">কোনো প্রডাক্ট নেই!</td>';
                                     echo '</tr>';
                                 }
                             ?>                            
@@ -112,6 +110,10 @@
                     <div class="form-group mb-3">
                         <label for="product_quantity" class="text-secondary">পরিমাণ</label>
                         <input type="number" name="product_quantity" class="form-control form-control-lg rounded-pill" required>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="product_free" class="text-secondary">ফ্রী</label>
+                        <input type="number" name="product_free" class="form-control form-control-lg rounded-pill">
                     </div>
                     <div class="form-group mb-3">
                         <label for="product_rate" class="text-secondary">দর</label>
@@ -159,6 +161,10 @@
                         <input type="number" name="product_quantity" class="form-control form-control-lg rounded-pill" value="<?php echo $_GET['quantity']; ?>" required>
                     </div>
                     <div class="form-group mb-3">
+                        <label for="product_free" class="text-secondary">ফ্রী</label>
+                        <input type="number" name="product_free" class="form-control form-control-lg rounded-pill" value="<?php echo $_GET['free']; ?>" required>
+                    </div>
+                    <div class="form-group mb-3">
                         <label for="product_rate" class="text-secondary">দর</label>
                         <div class="input-group mb-3">
                             <input type="text" name="product_rate" class="form-control form-control-lg rounded-pill rounded-end" value="<?php echo $_GET['rate']; ?>" aria-label="Brand Name" aria-describedby="tk" required>
@@ -166,7 +172,7 @@
                         </div>
                     </div>
                     </div>
-                    <div class="form-group d-flex gap-3 mb-3">
+                    <div class="form-group d-flex gap-3 mb-3 px-3">
                         <button type="submit" class="btn btn-info">পরিবর্তন করুন</button>
                         <a href="stock.php?brand=<?php echo $_GET['brand']; ?>" type="button" class="btn btn-secondary" data-bs-dismiss="modal">বাতিল করুন</a>
                     </div>
@@ -190,6 +196,10 @@
                         <input type="hidden" name="brand" class="form-control form-control-lg rounded-pill" value="<?php echo $_GET['brand']; ?>">
                         <input type="hidden" name="req" class="form-control form-control-lg rounded-pill" value="addquantity">
                     </div>
+                    <div class="form-group mb-3">
+                        <label for="product_ex_free" class="text-secondary">ফ্রী</label>
+                        <input type="number" name="product_ex_free" class="form-control form-control-lg rounded-pill">
+                    </div>
                     <div class="form-group d-flex gap-3 mb-3">
                         <button type="submit" class="btn btn-info">যুক্ত করুন</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">বাতিল করুন</button>
@@ -209,8 +219,9 @@
         $mainData = $conn->query($UpdatableProductData);
         $mainDataArray = $mainData->fetch_assoc();
         $quantity = $mainDataArray['product_quantity'] + $_GET['product_ex_quantity'];        
+        $free = $mainDataArray['product_free'] + $_GET['product_ex_free'];        
         $total_price = $quantity * $mainDataArray['product_rate'];
-        $sql = "UPDATE `stock` SET `product_quantity`='$quantity',`total_price`='$total_price',`created_date`='$date' where `id` = '$id'";
+        $sql = "UPDATE `stock` SET `product_quantity`='$quantity',`product_free`='$free',`total_price`='$total_price',`created_date`='$date' where `id` = '$id'";
         if ($conn->query($sql) === TRUE) {
             echo '<script type="text/javascript">window.location.href = "stock.php?brand='.$brand.'";</script>';
         }        

@@ -4,10 +4,11 @@
     $brand_name = $_GET['brand_name'];
     $product_name = $_GET['product_name'];
     $product_quantity = $_GET['product_quantity'];
+    $product_free = $_GET['product_free'];
     $product_rate = $_GET['product_rate'];
     $total_price = $_GET['product_quantity'] * $_GET['product_rate'];
     
-    $sql = "INSERT INTO `stock`(`brand_name`, `product_name`, `product_quantity`, `product_rate`, `total_price`) VALUES ('$brand_name', '$product_name', '$product_quantity', '$product_rate', '$total_price')";
+    $sql = "INSERT INTO `stock`(`brand_name`, `product_name`, `product_quantity`, `product_free`, `product_rate`, `total_price`) VALUES ('$brand_name', '$product_name', '$product_quantity', '$product_free', '$product_rate', '$total_price')";
     
     if ($conn->query($sql) === TRUE) {
         $msg = "পণ্য যুক্ত হয়েছে";
