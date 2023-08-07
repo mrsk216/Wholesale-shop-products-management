@@ -60,7 +60,7 @@
                                         echo '<td>'.date_format($date,"d/m/Y").'</td>';
                                         echo '<td><div class="d-flex justify-content-center align-items-center gap-2"><a href="stock.php?id='.$row["id"].'&brand='.$row["brand_name"].'&name='.$row["product_name"].'&quantity='.$row["product_quantity"].'&free='.$row["product_free"].'&rate='.$row["product_rate"].'&total_price='.$row["total_price"].'"><i class="fa-solid fa-pen-to-square fs-4"></i></a>|<a href="" class="addquantity" id="'.$row["id"].'" data-bs-toggle="modal" data-bs-target="#addquantity"><i class="fa-solid fa-circle-plus fs-4"></i></a></div></td>';
                                         echo '</tr>';
-                                        $sum += $row["total_price"];
+                                        $sum += (int)$row["total_price"];
                                     }
                                     echo '
                                         <tr class="text-center">
@@ -191,7 +191,7 @@
                 <form action="stock.php" method="GET">
                     <div class="form-group mb-3">
                         <label for="product_ex_quantity" class="text-secondary">পরিমাণ</label>
-                        <input type="number" name="product_ex_quantity" class="form-control form-control-lg rounded-pill" required>
+                        <input type="number" name="product_ex_quantity" class="form-control form-control-lg rounded-pill">
                         <input type="hidden" name="product_id" id="id" class="form-control form-control-lg rounded-pill">
                         <input type="hidden" name="brand" class="form-control form-control-lg rounded-pill" value="<?php echo $_GET['brand']; ?>">
                         <input type="hidden" name="req" class="form-control form-control-lg rounded-pill" value="addquantity">
@@ -218,8 +218,8 @@
         $UpdatableProductData = "SELECT * FROM `stock` where `id` = '$id'";
         $mainData = $conn->query($UpdatableProductData);
         $mainDataArray = $mainData->fetch_assoc();
-        $quantity = $mainDataArray['product_quantity'] + $_GET['product_ex_quantity'];        
-        $free = $mainDataArray['product_free'] + $_GET['product_ex_free'];        
+        $quantity = (int)$mainDataArray['product_quantity'] + (int)$_GET['product_ex_quantity'];        
+        $free = (int)$mainDataArray['product_free'] + (int)$_GET['product_ex_free'];        
         $total_price = $quantity * $mainDataArray['product_rate'];
         $sql = "UPDATE `stock` SET `product_quantity`='$quantity',`product_free`='$free',`total_price`='$total_price',`created_date`='$date' where `id` = '$id'";
         if ($conn->query($sql) === TRUE) {

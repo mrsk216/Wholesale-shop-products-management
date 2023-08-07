@@ -59,49 +59,58 @@ if(isset($_GET['brand']) && isset($_GET['history'])){
                                         <th>ফেরত</th>
                                         <th>বিক্রি</th>
                                         <th>দর</th>
-                                        <th>ড্যামেজ</th>
-                                        <th>ড্যামেজ টাকা</th>
                                         <th>টাকা</th>
                                         <th>কার্যক্রম</th>
                                     </tr>
                                 </thead>
-                            <tbody>
-                                <?php 
-                                    if ($result->num_rows > 0) { 
-                                        $num = '1';
-                                        $sum = 0;
-                                        for($i = 0;$i<count($data);$i++) {
-                                            echo '<tr class="text-center">';
-                                            echo '<td width="30px">'.$num++.'</td=>';
-                                            echo '<td>'.$data[$i]["product_name"].'</td>';
-                                            echo '<td>'.$data[$i]["product_load"].'</td>';
-                                            echo '<td>'.$data[$i]["product_free"].'</td>';
-                                            echo '<td>'.$data[$i]["product_return"].'</td>';
-                                            echo '<td class="fw-bold">'.$data[$i]["product_sale"].'</td>';
-                                            echo '<td class="fw-bold">'.$data[$i]["product_rate"].'</td>';
-                                            echo '<td>'.$data[$i]["product_damage"].'</td>';
-                                            echo '<td>'.($data[$i]["product_damage"]*$data[$i]["product_rate"]).'</td>';
-                                            echo '<td class="fw-bold">'.($data[$i]["product_sale"]*$data[$i]["product_rate"])-($data[$i]["product_damage"]*$data[$i]["product_rate"]).'</td>';
-                                            echo '<td><a href="./edit-sheet.php?id='.$data[$i]["id"].'"><i class="fa-solid fa-pen-to-square fs-4"></i></a></td>';
+                                <tbody>
+                                    <?php 
+                                        if ($result->num_rows > 0) { 
+                                            $num = '1';
+                                            $sum = 0;
+                                            for($i = 0;$i<count($data);$i++) {
+                                                echo '<tr class="text-center">';
+                                                echo '<td width="30px">'.$num++.'</td=>';
+                                                echo '<td>'.$data[$i]["product_name"].'</td>';
+                                                echo '<td>'.$data[$i]["product_load"].'</td>';
+                                                echo '<td>'.$data[$i]["product_free"].'</td>';
+                                                echo '<td>'.$data[$i]["product_return"].'</td>';
+                                                echo '<td class="fw-bold">'.$data[$i]["product_sale"].'</td>';
+                                                echo '<td class="fw-bold">'.$data[$i]["product_rate"].'</td>';
+                                                echo '<td class="fw-bold">'.($data[$i]["product_sale"]*$data[$i]["product_rate"]).'</td>';
+                                                echo '<td><a href="./edit-sheet.php?id='.$data[$i]["id"].'"><i class="fa-solid fa-pen-to-square fs-4"></i></a></td>';
+                                                echo '</tr>';
+                                                $sum += ($data[$i]["product_sale"]*$data[$i]["product_rate"]) - $data[0]["damage_amount"];
+                                            }
+                                            echo '
+                                                <tr class="text-center">
+                                                    <td>ড্যামেজ</td>
+                                                    <td class="fw-bold">
+                                                        <form action="addDamage.php" method="GET">
+                                                            <input type="hidden" name="pid" value="'.$data[0]["id"].'">
+                                                            <input type="hidden" name="pbrand" value="'.$data[0]["brand_name"].'">
+                                                            <input type="hidden" name="pc" value="'.$data[0]["created_at"].'">
+                                                            <div class="w-50 input-group mb-3">
+                                                                <span class="input-group-text bg-transparent border-end-0" id="damagetk">টাকা</span>
+                                                                <input type="text" name="product_damage" value="'.$data[0]["damage_amount"].'" class="form-control border-start-0" aria-label="damage" aria-describedby="damagetk">
+                                                                <button class="btn btn-outline-secondary" type="submit">যোগ করুন</button>
+                                                            </div>
+                                                        </form>
+                                                    </td>
+                                                    <td colspan="4"></td>
+                                                    <td>মোটঃ</td>
+                                                    <td class="fw-bold">'.$sum.'</td>
+                                                    <td></td>
+                                                </tr>
+                                            ';
+                                        }else{
+                                            echo '<tr class="text-center">'; 
+                                            echo '<td colspan="9">কোনো প্রডাক্ট নেই!</td>';
                                             echo '</tr>';
-                                            $sum += ($data[$i]["product_sale"]*$data[$i]["product_rate"])-($data[$i]["product_damage"]*$data[$i]["product_rate"]);
                                         }
-                                        echo '
-                                            <tr class="text-center">
-                                                <td colspan="8"></td>
-                                                <td>মোটঃ</td>
-                                                <td class="fw-bold">'.$sum.'</td>
-                                                <td></td>
-                                            </tr>
-                                        ';
-                                    }else{
-                                        echo '<tr class="text-center">'; 
-                                        echo '<td colspan="11">কোনো প্রডাক্ট নেই!</td>';
-                                        echo '</tr>';
-                                    }
-                                ?>                            
-                            </tbody>
-                        </table> 
+                                    ?>                            
+                                </tbody>
+                            </table> 
                         </div>
                     </div>
                 </div>       

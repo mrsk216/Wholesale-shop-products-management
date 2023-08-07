@@ -55,10 +55,6 @@
                       <label for="product_return" class="form-label">ফেরত</label>
                       <input type="number" class="form-control" name="product_return" value="<?php echo $data['product_return']; ?>">
                   </div>
-                  <div class="mb-3">
-                      <label for="product_damage" class="form-label">ড্যামেজ</label>
-                      <input type="number" class="form-control" name="product_damage" value="<?php echo $data['product_damage']; ?>">
-                  </div>
                 </div>
               </div>
             </div>

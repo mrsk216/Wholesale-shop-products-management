@@ -51,7 +51,7 @@
                   <div class="mb-3">
                     <label for="product_name" class="form-label">প্রোডাক্টের নাম</label>
                     <select class="form-control pro-name" name="product_name[]" required>
-                      <option muted>সিলেক্ট করুন</option>
+                      <option value="">সিলেক্ট করুন</option>
                       <?php
                         if ($result->num_rows > 0) { 
                           while($row = $result->fetch_assoc()) {
@@ -72,10 +72,6 @@
                   <div class="mb-3">
                       <label for="product_return" class="form-label">ফেরত</label>
                       <input type="number" class="form-control" name="product_return[]">
-                  </div>
-                  <div class="mb-3">
-                      <label for="product_damage" class="form-label">ড্যামেজ</label>
-                      <input type="number" class="form-control" name="product_damage[]">
                   </div>
                 </div>
               </div>

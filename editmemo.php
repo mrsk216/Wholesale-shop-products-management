@@ -9,7 +9,6 @@
     $product_load = $_GET['product_load'];
     $product_free = $_GET['product_free'];
     $product_return = $_GET['product_return'];
-    $product_damage = $_GET['product_damage'];
     $created_at = $_GET['created_at'];
     $update_date = date('Y-m-d H:i:s');
 
@@ -32,7 +31,6 @@
             $oldproduct_free = $row1['product_free'];
             $oldproduct_return = $row1['product_return'];
             $oldproduct_sale = $row1['product_sale'];
-            $oldproduct_damage = $row1['product_damage'];
         }
     }
 
@@ -44,18 +42,21 @@
         $newStockFree = $oldFreeProduct;
     }
 
-    $new_sale = $product_load - $product_return;
+    $new_sale = (int)$product_load - (int)$product_return;
     if($oldproduct_sale > $new_sale){
         $new_quantity = $oldProductQuantity + ($oldproduct_sale - $new_sale);
         $new_price = $new_quantity * $productRate;
     }elseif($oldproduct_sale < $new_sale){
         $new_quantity = $oldProductQuantity - ($new_sale - $oldproduct_sale);
         $new_price = $new_quantity * $productRate;
+    }else{
+        $new_quantity = $oldProductQuantity;
+        $new_price = $new_quantity * $productRate;
     }
     if($product_load>$product_return){
         if($oldProductQuantity>=$product_load){
             $stocksql = "UPDATE `stock` SET `product_quantity`='$new_quantity',`product_free`='$newStockFree',`total_price`='$new_price' where `product_name` = '$product_name'";
-            $sql = "UPDATE `memo` SET `product_load`='$product_load',`product_free`='$product_free',`product_return`='$product_return',`product_sale`='$new_sale',`product_damage`='$product_damage',`updated_at`='$update_date' where `id` = '$id'";
+            $sql = "UPDATE `memo` SET `product_load`='$product_load',`product_free`='$product_free',`product_return`='$product_return',`product_sale`='$new_sale',`updated_at`='$update_date' where `id` = '$id'";
             if ($conn->query($sql) === TRUE && $conn->query($stocksql) === TRUE) {
                 $msg = "মেমো পরিবর্তন হয়েছে";
             } else {
