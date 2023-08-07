@@ -80,7 +80,7 @@ if(isset($_GET['brand']) && isset($_GET['history'])){
                                                 echo '<td class="fw-bold">'.($data[$i]["product_sale"]*$data[$i]["product_rate"]).'</td>';
                                                 echo '<td><a href="./edit-sheet.php?id='.$data[$i]["id"].'"><i class="fa-solid fa-pen-to-square fs-4"></i></a></td>';
                                                 echo '</tr>';
-                                                $sum += ($data[$i]["product_sale"]*$data[$i]["product_rate"]) - $data[0]["damage_amount"];
+                                                $sum += ($data[$i]["product_sale"]*$data[$i]["product_rate"]);
                                             }
                                             echo '
                                                 <tr class="text-center">
@@ -98,8 +98,8 @@ if(isset($_GET['brand']) && isset($_GET['history'])){
                                                         </form>
                                                     </td>
                                                     <td colspan="4"></td>
-                                                    <td>মোটঃ</td>
-                                                    <td class="fw-bold">'.$sum.'</td>
+                                                    <td class="h5 fw-bold">মোটঃ</td>
+                                                    <td class="h5 fw-bold">'.$sum - (int)$data[0]["damage_amount"].'</td>
                                                     <td></td>
                                                 </tr>
                                             ';
